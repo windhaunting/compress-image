@@ -18,6 +18,11 @@ def read_faces():
 
 	return (data_x)
 
+
+def getPCA():
+    X = 1
+    
+    
 if __name__ == '__main__':
 	
 	################################################
@@ -29,6 +34,9 @@ if __name__ == '__main__':
 	print('Implement PCA here ...')
 	
 	################################################
+    
+    
+    
 	# K-Means
 
 	data_x = read_scene()
