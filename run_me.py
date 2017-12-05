@@ -29,13 +29,25 @@ def getPCAImage():
         vk = v[:, ncol-k: ncol+1]
         print('vk = ', vk.shape, vk)
         #second row  reconstructed
+        '''
         X1Recon = np.dot(np.dot(data_x[1, :], vk), vk.T)
         print('x1, X1Recon = ', data_x[1, :].shape, X1Recon.shape[0], math.sqrt(X1Recon.shape[0]), data_x[1, :], X1Recon)
     
         misc.imsave('../Figures/x1reconstruct_k'  + str(k) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
+        '''
     
+        XRecon = np.dot(np.dot(data_x, vk), vk.T)
+        
+        #get averagesquared reconstruction error
+        errorK = math.sqrt(np.mean(data_x-XRecon))
+        print ("error for different k ", k, errorK)
+        X1Recon = XRecon[1, :]
+        print('x1, X1Recon = ', data_x[1, :].shape, X1Recon.shape[0], math.sqrt(X1Recon.shape[0]), data_x[1, :], X1Recon)
     
+        misc.imsave('../Figures/x1reconstruct_ka'  + str(k) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
     
+    X1Recon = np.dot(np.dot(data_x[1, :], vk), vk.T)
+
 if __name__ == '__main__':
 	
 	################################################
