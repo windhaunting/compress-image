@@ -17,13 +17,13 @@ def getPCAImage():
     print('covMat = ', covMat.shape)
     
     w, v = np.linalg.eigh(covMat)
-    print('w, v = ', w.shape, v.shape,  v[:, -2])
+    print('w, v = ', w.shape, v.shape,  v[:, -1])
     
     k = 3    # [3, 5, 10, 30, 50, 100, 150, 300]  #k largest eigenvalues
     #visually inspect face 
     #get k eigenvectors vK corresponding to largest k eigenvalues  
-    
-    vk = v[:, -k-1:-1]
+    ncol = v.shape[1]
+    vk = v[:, ncol-k: ncol+1]
     print('vk = ', vk.shape, vk)
     
 
