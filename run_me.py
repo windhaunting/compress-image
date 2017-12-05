@@ -11,9 +11,22 @@ def getPCAImage():
     print('X = ', data_x.shape)
 
     print('Implement PCA here ...')
+    #do we need to center the data?
     
+    covMat = np.cov(data_x.T)
+    print('covMat = ', covMat.shape)
     
+    w, v = np.linalg.eigh(covMat)
+    print('w, v = ', w.shape, v.shape,  v[:, -2])
     
+    k = 3    # [3, 5, 10, 30, 50, 100, 150, 300]  #k largest eigenvalues
+    #visually inspect face 
+    #get k eigenvectors vK corresponding to largest k eigenvalues  
+    
+    vk = v[:, -k-1:-1]
+    print('vk = ', vk.shape, vk)
+    
+
 if __name__ == '__main__':
 	
 	################################################
