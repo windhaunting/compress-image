@@ -1,6 +1,8 @@
 # Import modules
 
 import numpy as np
+from scipy import misc
+import math
 
 from files import read_faces
 from files import read_scene
@@ -18,16 +20,21 @@ def getPCAImage():
     
     w, v = np.linalg.eigh(covMat)
     print('w, v = ', w.shape, v.shape,  v[:, -1])
+
+    kLst = [3, 5, 10, 30, 50, 100, 150, 300]    # [3, 5, 10, 30, 50, 100, 150, 300]  #k largest eigenvalues
+    for k in kLst:
+        #visually inspect face 
+        #get k eigenvectors vK corresponding to largest k eigenvalues  
+        ncol = v.shape[1]
+        vk = v[:, ncol-k: ncol+1]
+        print('vk = ', vk.shape, vk)
+        #second row  reconstructed
+        X1Recon = np.dot(np.dot(data_x[1, :], vk), vk.T)
+        print('x1, X1Recon = ', data_x[1, :].shape, X1Recon.shape[0], math.sqrt(X1Recon.shape[0]), data_x[1, :], X1Recon)
     
-    k = 3    # [3, 5, 10, 30, 50, 100, 150, 300]  #k largest eigenvalues
-    #visually inspect face 
-    #get k eigenvectors vK corresponding to largest k eigenvalues  
-    ncol = v.shape[1]
-    vk = v[:, ncol-k: ncol+1]
-    print('vk = ', vk.shape, vk)
-    #second row  reconstructed
-    X1Recon = np.dot(np.dot(data_x[1, :], vk), vk.T)
-    print('x1, X1Recon = ', data_x[1, :], X1Recon)
+        misc.imsave('../Figures/x1reconstruct_k'  + str(k) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
+    
+    
     
 if __name__ == '__main__':
 	
