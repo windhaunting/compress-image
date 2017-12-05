@@ -25,8 +25,10 @@ def getPCAImage():
     ncol = v.shape[1]
     vk = v[:, ncol-k: ncol+1]
     print('vk = ', vk.shape, vk)
+    #second row  reconstructed
+    X1Recon = np.dot(np.dot(data_x[1, :], vk), vk.T)
+    print('x1, X1Recon = ', data_x[1, :], X1Recon)
     
-
 if __name__ == '__main__':
 	
 	################################################
