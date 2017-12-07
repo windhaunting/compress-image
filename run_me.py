@@ -52,7 +52,11 @@ def getPCAImage():
     
         misc.imsave('../Figures/x1reconstruct_ka'  + str(k) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
     
-    X1Recon = np.dot(np.dot(data_x[1, :], vk), vk.T)
+
+
+def KMeanCompress():
+    x = 1
+    
 
 
 if __name__ == '__main__':
