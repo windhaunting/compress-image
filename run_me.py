@@ -16,10 +16,10 @@ def getPCAImage():
     #do we need to center the data?
     
     covMat = np.cov(data_x.T)
-    print('covMat = ', covMat.shape)
+    #print('covMat = ', covMat.shape)
     
     w, v = np.linalg.eigh(covMat)
-    print('w, v = ', w.shape, v.shape,  v[:, -1])
+    print('w, v = ', w.shape, v.shape)
 
     kLst = [3, 5, 10, 30, 50, 100, 150, 300]    # [3, 5, 10, 30, 50, 100, 150, 300]  #k largest eigenvalues
     for k in kLst:
@@ -27,7 +27,7 @@ def getPCAImage():
         #get k eigenvectors vK corresponding to largest k eigenvalues  
         ncol = v.shape[1]
         vk = v[:, ncol-k: ncol+1]
-        print('vk = ', vk.shape, vk)
+        print('vk = ', vk.shape)
         #second row  reconstructed
         '''
         X1Recon = np.dot(np.dot(data_x[1, :], vk), vk.T)
@@ -40,13 +40,20 @@ def getPCAImage():
         
         #get averagesquared reconstruction error
         errorK = math.sqrt(np.mean(data_x-XRecon))
-        print ("error for different k ", k, errorK)
+        #print ("error for different k ", k, errorK)
+        #memory consumed by XRecon
+        compressionRate = (np.dot(data_x, vk).nbytes + vk.nbytes)/data_x.nbytes
+        
+        print ("compressionRate for different k ", k, compressionRate)
+
+
         X1Recon = XRecon[1, :]
-        print('x1, X1Recon = ', data_x[1, :].shape, X1Recon.shape[0], math.sqrt(X1Recon.shape[0]), data_x[1, :], X1Recon)
+        #print('x1, X1Recon = ', data_x[1, :].shape, X1Recon.shape[0], math.sqrt(X1Recon.shape[0]), data_x[1, :], X1Recon)
     
         misc.imsave('../Figures/x1reconstruct_ka'  + str(k) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
     
     X1Recon = np.dot(np.dot(data_x[1, :], vk), vk.T)
+
 
 if __name__ == '__main__':
 	
