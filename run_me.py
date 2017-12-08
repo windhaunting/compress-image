@@ -6,7 +6,7 @@ import math
 
 from files import read_faces
 from files import read_scene
-from plotting import plottingPCAImage
+from plotting import plottingImages
 
 from sklearn.cluster import KMeans
 
@@ -55,7 +55,7 @@ def getPCAImage():
         ArrayLst.append(X1Recon)
         #misc.imsave('../Figures/x1reconstruct_ka'  + str(k) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
     
-    plottingPCAImage(kLst, ArrayLst, "../Figures/x1reconstructImages")
+    plottingImages(kLst, ArrayLst, "../Figures/x1reconstructImages", "Face reconstruction", "Face")
 
 def KMeanCompress():
     
@@ -67,15 +67,27 @@ def KMeanCompress():
 
     kLst = [2, 5, 10, 25, 50, 75, 100, 200]         #k clusters
 
+    ArrayLst = []
+
     for k in kLst:
         kmeans = KMeans(n_clusters = k, random_state=0).fit(flattened_image)
         clustCenter = kmeans.cluster_centers_
         labels = kmeans.labels_
         
         print('labels dim = ', k, clustCenter, labels.shape)
+        i = 0
+        for x in np.nditer(flattened_image, op_flags=['readwrite']):
+            
+            x[...] = clustCenter[labels[i]]
+            i+=1
+        
         reconstructed_image = flattened_image.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
         print('Reconstructed image = ', reconstructed_image.shape)
         
+        ArrayLst.append(reconstructed_image)
+
+    plottingImages(kLst, ArrayLst, "../Figures/TimeSquarereconstructImages", "Times_square reconstruction", "Times_square")
+
 
 if __name__ == '__main__':
 	

@@ -15,7 +15,7 @@ from scipy import misc
 
 
 
-def plottingPCAImage(kLst, ArrayLst, outImagePdf):
+def plottingImages(kLst, ArrayLst, outImagePdf, ylabel, titlePart):
     plt.figure(1, figsize=(6,4))  # figsize=(6,4))
 
     subPlotNums = len(ArrayLst)
@@ -29,7 +29,7 @@ def plottingPCAImage(kLst, ArrayLst, outImagePdf):
         plt.imshow(X1Recon, interpolation='nearest', cmap='gray')
 
         plt.xlabel("k: " + str(kLst[i-331]))
-        plt.ylabel("Face reconstructed")
-        plt.title("face 1 (k= " + str(kLst[i-331]) + ")")
+        plt.ylabel(ylabel)
+        plt.title(titlePart + "(k= " + str(kLst[i-331]) + ")")
         
     plt.savefig(outImagePdf + ".pdf")
