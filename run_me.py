@@ -46,10 +46,10 @@ def getPCAImage():
         
         print ("compressionRate for different k ", k, compressionRate)
 
-
         X1Recon = XRecon[1, :]
         #print('x1, X1Recon = ', data_x[1, :].shape, X1Recon.shape[0], math.sqrt(X1Recon.shape[0]), data_x[1, :], X1Recon)
     
+        
         misc.imsave('../Figures/x1reconstruct_ka'  + str(k) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
     
 
