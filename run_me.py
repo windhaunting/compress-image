@@ -8,13 +8,15 @@ from files import read_faces
 from files import read_scene
 from plotting import plottingPCAImage
 
+from sklearn.cluster import KMeans
+
 def getPCAImage():
+    
+    print('Implement PCA here ...')
     data_x = read_faces()
     print('X = ', data_x.shape)
 
-    print('Implement PCA here ...')
     #do we need to center the data?
-    
     covMat = np.cov(data_x.T)
     #print('covMat = ', covMat.shape)
     
@@ -57,27 +59,31 @@ def getPCAImage():
 
 def KMeanCompress():
     
+    print('Implement k-means here ...')
     data_x = read_scene()
     print('X = ', data_x.shape)
-
     flattened_image = data_x.ravel().reshape(data_x.shape[0] * data_x.shape[1], data_x.shape[2])
     print('Flattened image = ', flattened_image.shape)
 
-    print('Implement k-means here ...')
+    kLst = [2, 5, 10, 25, 50, 75, 100, 200]         #k clusters
 
-    reconstructed_image = flattened_image.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
-    print('Reconstructed image = ', reconstructed_image.shape)
-    
+    for k in kLst:
+        kmeans = KMeans(n_clusters = k, random_state=0).fit(flattened_image)
+        clustCenter = kmeans.cluster_centers_
+        labels = kmeans.labels_
+        
+        print('labels dim = ', k, clustCenter, labels.shape)
+        reconstructed_image = flattened_image.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
+        print('Reconstructed image = ', reconstructed_image.shape)
+        
 
 if __name__ == '__main__':
 	
 	################################################
 	# PCA
-    getPCAImage()
-	
+    #getPCAImage()
 	
 	################################################
-    
 	# K-Means
     KMeanCompress()
    
