@@ -94,13 +94,13 @@ def KMeanCompress():
         reconstructed_image = flattenedImagesReconstructed.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
         print('Reconstructed image = ', k, reconstructed_image.shape)
         
-        '''
+        
         errorK = math.sqrt(np.mean(abs(data_x-reconstructed_image)))
         print ("reconstruction error for different k ", k, errorK)
         
-        compressionRate = (k*3*32+reconstructed_image.shape[0]*math.ceil(math.log(k, 2)))/(data_x.shape[0]*data_x.shape[1]*24)
+        compressionRate = (k*3*32+reconstructed_image.shape[0]*3*math.ceil(math.log(k, 2)))/(data_x.shape[0]*data_x.shape[1]*24)
         print ("compression Rate for different k ", k, compressionRate)
-        '''
+        
         
         ArrayLst.append(reconstructed_image)
         
