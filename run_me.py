@@ -82,7 +82,7 @@ def KMeanCompress():
         labels = kmeans.labels_
         #print('labels dim = ', k, clustCenter.shape, labels.shape)
         sqError = sum(np.min(cdist(flattened_image, clustCenter, 'euclidean'), axis=1))
-        print('sqError = ', k, sqError)
+        print('sqError = ', k, sqError, math.log(sqError, 10))
 
         sumSquareErros.append(math.log(sqError))
     
@@ -92,9 +92,9 @@ def KMeanCompress():
             flattenedImagesReconstructed[i] = clustCenter[labels[i]]
         
         reconstructed_image = flattenedImagesReconstructed.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
-        print('Reconstructed image = ', reconstructed_image.shape , np.mean(data_x-reconstructed_image))
+        #print('Reconstructed image = ', reconstructed_image.shape , np.mean(data_x-reconstructed_image))
         
-        errorK = math.sqrt(np.mean(data_x-reconstructed_image))
+        errorK = math.sqrt(np.mean(abs(data_x-reconstructed_image)))
         print ("reconstruction error for different k ", k, errorK)
         
         compressionRate = (k*3*32+reconstructed_image.shape[0]*math.ceil(math.log(k, 2)))/(data_x.shape[0]*data_x.shape[1]*24)
