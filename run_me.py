@@ -92,7 +92,7 @@ def KMeanCompress():
             flattenedImagesReconstructed[i] = clustCenter[labels[i]]
         
         reconstructed_image = flattenedImagesReconstructed.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
-        #print('Reconstructed image = ', reconstructed_image.shape , np.mean(data_x-reconstructed_image))
+        print('Reconstructed image = ', k, reconstructed_image.shape)
         
         '''
         errorK = math.sqrt(np.mean(abs(data_x-reconstructed_image)))
