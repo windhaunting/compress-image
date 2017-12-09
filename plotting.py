@@ -18,7 +18,7 @@ def plottingImagesPCA(kLst, ArrayLst, outImagePdf, titlePart):
     plt.figure(1, figsize=(6,4))  # figsize=(6,4))
 
     subPlotNums = len(ArrayLst)
-    
+    plt.gray()
     for i in range(331, subPlotNums+331):
 
         plt.subplot(i)
@@ -38,10 +38,10 @@ def plottingImagesPCA(kLst, ArrayLst, outImagePdf, titlePart):
 
 def plottingImagesKMean(kLst, ArrayLst, outImagePdf, titlePart, dataXShape):
 
-    plt.figure(2, figsize=(8,8)) # figsize=(6,4))
+    plt.figure(2, figsize=(8,9)) # figsize=(6,4))
 
     subPlotNums = len(ArrayLst)
-    
+    plt.gray()
     for i in range(331, subPlotNums+331):
 
         plt.subplot(i)
