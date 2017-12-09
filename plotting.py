@@ -48,7 +48,7 @@ def plottingImagesKMean(kLst, ArrayLst, outImagePdf, titlePart, dataXShape):
         reconImage = ArrayLst[i-331]
         reconImage = reconImage.ravel().reshape(dataXShape)
         #misc.imsave('../Figures/x1reconstruct_ka'  + str(kLst[i-331]) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
-        plt.imshow(reconImage.convert('L'), interpolation='nearest', cmap=pylab.gray())
+        plt.imshow(reconImage, interpolation='nearest', cmap=pylab.gray())
 
         #plt.xlabel("k: " + str(kLst[i-331]))
         #plt.ylabel(ylabel)
