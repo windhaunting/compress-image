@@ -6,10 +6,14 @@ import math
 
 from files import read_faces
 from files import read_scene
+
 from plotting import plottingImagesPCA
 
 from sklearn.cluster import KMeans
 from plotting import plottingImagesKMean
+from plotting import plottingElbowKMean
+
+from scipy.spatial.distance import cdist
 
 
 def getPCAImage():
@@ -71,13 +75,17 @@ def KMeanCompress():
 
     ArrayLst = []
 
-    for k in kLst[6:8]:
+    sumSquareErros = []
+    for k in kLst:
         kmeans = KMeans(n_clusters = k, random_state=0).fit(flattened_image)
         clustCenter = kmeans.cluster_centers_
         labels = kmeans.labels_
         
         #print('labels dim = ', k, clustCenter.shape, labels.shape)
         
+        sumSquareErros.append(sum(np.min(cdist(flattened_image, clustCenter, 'euclidean'), axis=1)))
+    
+
         for i in np.arange(flattened_image.shape[0]):
             flattened_image[i] = clustCenter[labels[i]]
         
@@ -90,11 +98,11 @@ def KMeanCompress():
         compressionRate = (k*3*32+flattened_image.shape[0]*math.ceil(math.log(k, 2)))/(data_x.shape[0]*data_x.shape[1]*24)
         print ("compression Rate for different k ", k, compressionRate)
 
-
         ArrayLst.append(reconstructed_image)
+        
 
-    #plottingImagesKMean(kLst, ArrayLst, "../Figures/TimeSquarereconstructImages", "Times_square", data_x.shape)
-
+    plottingImagesKMean(kLst, ArrayLst, "../Figures/TimeSquarereconstructImages", "Times_square", data_x.shape)
+    plottingElbowKMean(kLst, sumSquareErros, "../Figures/TimeSquareKMeansElbow", "Elbow plot of kMeans on Time_square image")
 
 if __name__ == '__main__':
 	

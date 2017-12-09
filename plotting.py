@@ -38,7 +38,7 @@ def plottingImagesPCA(kLst, ArrayLst, outImagePdf, titlePart):
 
 def plottingImagesKMean(kLst, ArrayLst, outImagePdf, titlePart, dataXShape):
 
-    plt.figure(1, figsize=(6,4))  # figsize=(6,4))
+    plt.figure(2, figsize=(6,4))  # figsize=(6,4))
 
     subPlotNums = len(ArrayLst)
     
@@ -57,3 +57,12 @@ def plottingImagesKMean(kLst, ArrayLst, outImagePdf, titlePart, dataXShape):
     plt.suptitle(titlePart + "reconstruction image with kMeans")
     plt.savefig(outImagePdf + ".pdf")
     
+
+def plottingElbowKMean(kLst, sumSquareErros, outImagePdf, titlePart):
+    
+    plt.figure(3, figsize=(6, 8))  # figsize=(6,4))
+    plt.plot(kLst, sumSquareErros, 'bx-')
+    plt.xlabel("k value")
+    plt.ylabel("Sum of squared error")
+    plt.title(titlePart)
+    plt.savefig(outImagePdf + ".pdf")
