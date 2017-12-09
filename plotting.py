@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Pdf")
 import matplotlib.pyplot as plt
+import pylab
 
 
 
@@ -18,7 +19,7 @@ def plottingImagesPCA(kLst, ArrayLst, outImagePdf, titlePart):
     plt.figure(1, figsize=(6,4))  # figsize=(6,4))
 
     subPlotNums = len(ArrayLst)
-    plt.gray()
+
     for i in range(331, subPlotNums+331):
 
         plt.subplot(i)
@@ -41,14 +42,13 @@ def plottingImagesKMean(kLst, ArrayLst, outImagePdf, titlePart, dataXShape):
     plt.figure(2, figsize=(8,9)) # figsize=(6,4))
 
     subPlotNums = len(ArrayLst)
-    plt.gray()
     for i in range(331, subPlotNums+331):
 
         plt.subplot(i)
         reconImage = ArrayLst[i-331]
         reconImage = reconImage.ravel().reshape(dataXShape)
         #misc.imsave('../Figures/x1reconstruct_ka'  + str(kLst[i-331]) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
-        plt.imshow(reconImage.convert('L'), interpolation='nearest', cmap=plt.get_cmap('gray'))
+        plt.imshow(reconImage.convert('L'), interpolation='nearest', cmap=pylab.gray())
 
         #plt.xlabel("k: " + str(kLst[i-331]))
         #plt.ylabel(ylabel)
