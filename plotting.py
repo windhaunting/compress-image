@@ -38,7 +38,7 @@ def plottingImagesPCA(kLst, ArrayLst, outImagePdf, titlePart):
 
 def plottingImagesKMean(kLst, ArrayLst, outImagePdf, titlePart, dataXShape):
 
-    plt.figure(2, figsize=(6,4))  # figsize=(6,4))
+    plt.figure(2, figsize=(8,6))  # figsize=(6,4))
 
     subPlotNums = len(ArrayLst)
     
