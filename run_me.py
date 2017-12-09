@@ -45,11 +45,10 @@ def getPCAImage():
         
         #get averagesquared reconstruction error
         errorK = math.sqrt(np.mean(data_x-XRecon))
-        #print ("error for different k ", k, errorK)
+        print ("reconstruction error for different k ", k, errorK)
         #memory consumed by XRecon
         compressionRate = (np.dot(data_x, vk).nbytes + vk.nbytes)/data_x.nbytes
-        
-        print ("compressionRate for different k ", k, compressionRate)
+        print ("compression Rate for different k ", k, compressionRate)
 
         X1Recon = XRecon[1, :]
         #print('x1, X1Recon = ', data_x[1, :].shape, X1Recon.shape[0], math.sqrt(X1Recon.shape[0]), data_x[1, :], X1Recon)
@@ -72,7 +71,7 @@ def KMeanCompress():
 
     ArrayLst = []
 
-    for k in kLst:
+    for k in kLst[6:8]:
         kmeans = KMeans(n_clusters = k, random_state=0).fit(flattened_image)
         clustCenter = kmeans.cluster_centers_
         labels = kmeans.labels_
@@ -85,18 +84,25 @@ def KMeanCompress():
         reconstructed_image = flattened_image.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
         #print('Reconstructed image = ', reconstructed_image.shape)
         
+        errorK = math.sqrt(np.mean(data_x-reconstructed_image))
+        print ("reconstruction error for different k ", k, errorK)
+        
+        compressionRate = (k*3*32+flattened_image.shape[0]*math.ceil(math.log(k, 2)))/(data_x.shape[0]*data_x.shape[1]*24)
+        print ("compression Rate for different k ", k, compressionRate)
+
+
         ArrayLst.append(reconstructed_image)
 
-    plottingImagesKMean(kLst, ArrayLst, "../Figures/TimeSquarereconstructImages", "Times_square", data_x.shape)
+    #plottingImagesKMean(kLst, ArrayLst, "../Figures/TimeSquarereconstructImages", "Times_square", data_x.shape)
 
 
 if __name__ == '__main__':
 	
 	################################################
 	# PCA
-    getPCAImage()
+    #getPCAImage()
 	
 	################################################
 	# K-Means
-    #KMeanCompress()
+    KMeanCompress()
    
