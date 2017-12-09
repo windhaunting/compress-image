@@ -6,9 +6,11 @@ import math
 
 from files import read_faces
 from files import read_scene
-from plotting import plottingImages
+from plotting import plottingImagesPCA
 
 from sklearn.cluster import KMeans
+from plotting import plottingImagesKMean
+
 
 def getPCAImage():
     
@@ -55,13 +57,14 @@ def getPCAImage():
         ArrayLst.append(X1Recon)
         #misc.imsave('../Figures/x1reconstruct_ka'  + str(k) + '.jpg', np.reshape(X1Recon, (int(math.sqrt(X1Recon.shape[0])), int(math.sqrt(X1Recon.shape[0])))))
     
-    plottingImages(kLst, ArrayLst, "../Figures/x1reconstructImages", "Face reconstruction", "Face")
+    plottingImagesPCA(kLst, ArrayLst, "../Figures/x1reconstructImages", "Face")
 
 def KMeanCompress():
     
     print('Implement k-means here ...')
     data_x = read_scene()
     print('X = ', data_x.shape)
+    
     flattened_image = data_x.ravel().reshape(data_x.shape[0] * data_x.shape[1], data_x.shape[2])
     print('Flattened image = ', flattened_image.shape)
 
@@ -74,28 +77,26 @@ def KMeanCompress():
         clustCenter = kmeans.cluster_centers_
         labels = kmeans.labels_
         
-        print('labels dim = ', k, clustCenter, labels.shape)
-        i = 0
-        for x in np.nditer(flattened_image, op_flags=['readwrite']):
-            
-            x[...] = clustCenter[labels[i]]
-            i+=1
+        #print('labels dim = ', k, clustCenter.shape, labels.shape)
+        
+        for i in np.arange(flattened_image.shape[0]):
+            flattened_image[i] = clustCenter[labels[i]]
         
         reconstructed_image = flattened_image.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
-        print('Reconstructed image = ', reconstructed_image.shape)
+        #print('Reconstructed image = ', reconstructed_image.shape)
         
         ArrayLst.append(reconstructed_image)
 
-    plottingImages(kLst, ArrayLst, "../Figures/TimeSquarereconstructImages", "Times_square reconstruction", "Times_square")
+    plottingImagesKMean(kLst, ArrayLst, "../Figures/TimeSquarereconstructImages", "Times_square", data_x.shape)
 
 
 if __name__ == '__main__':
 	
 	################################################
 	# PCA
-    #getPCAImage()
+    getPCAImage()
 	
 	################################################
 	# K-Means
-    KMeanCompress()
+    #KMeanCompress()
    
