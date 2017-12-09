@@ -29,7 +29,7 @@ def plottingImagesPCA(kLst, ArrayLst, outImagePdf, titlePart):
 
         #plt.xlabel("k: " + str(kLst[i-331]))
         #plt.ylabel(ylabel)
-        plt.title("(k= " + str(kLst[i-331]) + ")")
+        plt.title("k= " + str(kLst[i-331]))
         
     plt.suptitle(titlePart + "reconstruction image with kMeans")
     plt.savefig(outImagePdf + ".pdf")
@@ -52,7 +52,7 @@ def plottingImagesKMean(kLst, ArrayLst, outImagePdf, titlePart, dataXShape):
 
         #plt.xlabel("k: " + str(kLst[i-331]))
         #plt.ylabel(ylabel)
-        plt.title("(k= " + str(kLst[i-331]) + ")")
+        plt.title("k= " + str(kLst[i-331]))
         
     plt.suptitle(titlePart + "reconstruction image with kMeans")
     plt.savefig(outImagePdf + ".pdf")

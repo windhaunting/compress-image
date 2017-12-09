@@ -80,22 +80,24 @@ def KMeanCompress():
         kmeans = KMeans(n_clusters = k, random_state=0).fit(flattened_image)
         clustCenter = kmeans.cluster_centers_
         labels = kmeans.labels_
-        
         #print('labels dim = ', k, clustCenter.shape, labels.shape)
-        
-        sumSquareErros.append(sum(np.min(cdist(flattened_image, clustCenter, 'euclidean'), axis=1)))
-    
+        sqError = sum(np.min(cdist(flattened_image, clustCenter, 'euclidean'), axis=1))
+        print('sqError = ', k, sqError)
 
+        sumSquareErros.append(math.log(sqError))
+    
+        #replace its data point with its centroid data value where it belong to
+        flattenedImagesReconstructed = np.zeros(flattened_image.shape)        
         for i in np.arange(flattened_image.shape[0]):
-            flattened_image[i] = clustCenter[labels[i]]
+            flattenedImagesReconstructed[i] = clustCenter[labels[i]]
         
-        reconstructed_image = flattened_image.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
-        #print('Reconstructed image = ', reconstructed_image.shape)
+        reconstructed_image = flattenedImagesReconstructed.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
+        print('Reconstructed image = ', reconstructed_image.shape , np.mean(data_x-reconstructed_image))
         
         errorK = math.sqrt(np.mean(data_x-reconstructed_image))
         print ("reconstruction error for different k ", k, errorK)
         
-        compressionRate = (k*3*32+flattened_image.shape[0]*math.ceil(math.log(k, 2)))/(data_x.shape[0]*data_x.shape[1]*24)
+        compressionRate = (k*3*32+reconstructed_image.shape[0]*math.ceil(math.log(k, 2)))/(data_x.shape[0]*data_x.shape[1]*24)
         print ("compression Rate for different k ", k, compressionRate)
 
         ArrayLst.append(reconstructed_image)
