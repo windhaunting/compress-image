@@ -48,7 +48,7 @@ def getPCAImage():
         XRecon = np.dot(np.dot(data_x, vk), vk.T)
         
         #get averagesquared reconstruction error
-        errorK = math.sqrt(np.mean(data_x-XRecon))
+        errorK = math.sqrt(np.mean(data_x-XRecon)**2)
         print ("reconstruction error for different k ", k, errorK)
         #memory consumed by XRecon
         compressionRate = (np.dot(data_x, vk).nbytes + vk.nbytes)/data_x.nbytes
@@ -94,7 +94,7 @@ def KMeanCompress():
         reconstructed_image = flattenedImagesReconstructed.ravel().reshape(data_x.shape[0], data_x.shape[1], data_x.shape[2])
         print('Reconstructed image = ', k, reconstructed_image.shape)
         
-        errorK = math.sqrt(np.mean(abs(data_x-reconstructed_image)))
+        errorK = math.sqrt(np.mean(data_x-reconstructed_image**2))
         print ("reconstruction error for different k ", k, errorK)
         
         compressionRate = (k*3*32+reconstructed_image.shape[0]*3*math.ceil(math.log(k, 2)))/(data_x.shape[0]*data_x.shape[1]*24)
@@ -114,5 +114,5 @@ if __name__ == '__main__':
 	
 	################################################
 	# K-Means
-    KMeanCompress()
+    #KMeanCompress()
    
