@@ -16,7 +16,7 @@ import pylab
 
 
 def plottingImagesPCA(kLst, ArrayLst, outImagePdf, titlePart):
-    plt.figure(1, figsize=(6,4))  # figsize=(6,4))
+    plt.figure(1, figsize=(8,9))  # figsize=(6,4))
 
     subPlotNums = len(ArrayLst)
 

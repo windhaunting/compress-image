@@ -36,7 +36,7 @@ def getPCAImage():
         #get k eigenvectors vK corresponding to largest k eigenvalues  
         ncol = v.shape[1]
         vk = v[:, ncol-k: ncol+1]
-        print('vk = ', vk.shape)
+        #print('vk = ', vk.shape)
         #second row  reconstructed
         '''
         X1Recon = np.dot(np.dot(data_x[1, :], vk), vk.T)
@@ -81,10 +81,10 @@ def KMeanCompress():
         clustCenter = kmeans.cluster_centers_
         labels = kmeans.labels_
         #print('labels dim = ', k, clustCenter.shape, labels.shape)
-        #sqError = sum(np.min(cdist(flattened_image, clustCenter, 'euclidean'), axis=1))
+        sqError = sum(np.min(cdist(flattened_image, clustCenter, 'euclidean'), axis=1))
         #print('sqError = ', k, sqError, math.log(sqError, 10))
 
-        #sumSquareErros.append(math.log(sqError))
+        sumSquareErros.append(math.log(sqError))
     
         #replace its data point with its centroid data value where it belong to
         flattenedImagesReconstructed = np.zeros(flattened_image.shape)        
@@ -104,13 +104,13 @@ def KMeanCompress():
         
 
     plottingImagesKMean(kLst, ArrayLst, "../Figures/TimeSquarereconstructImages", "Times_square", data_x.shape)
-   # plottingElbowKMean(kLst, sumSquareErros, "../Figures/TimeSquareKMeansElbow", "Elbow plot of kMeans on Time_square image")
+    plottingElbowKMean(kLst, sumSquareErros, "../Figures/TimeSquareKMeansElbow", "Elbow plot of kMeans on Time_square image")
 
 if __name__ == '__main__':
 	
 	################################################
 	# PCA
-    #getPCAImage()
+    getPCAImage()
 	
 	################################################
 	# K-Means
